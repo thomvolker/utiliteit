@@ -42,9 +42,9 @@ Thom Volker ([t.b.volker@uu.nl](mailto:t.b.volker@uu.nl))
 :::
 
 ::: {.column width="60%"}
-- MSc. in Methoden en Statistiek & Sociologie
-
 - PhD kandidaat bij Universiteit Utrecht en CBS
+
+- MSc. in Methoden en Statistiek & Sociologie
 
   - Doel: Doorontwikkelen van veilige (!) data synthesis technieken
 
@@ -110,13 +110,7 @@ Mocht je dit complexe systeem nou volledig doorgrond hebben, kan je direct nieuw
 
 3. Indien nodig, voeg complexiteit toe (specifieke modellen, transformations, interacties)
 
-4. Itereer tussen (2.) en (3.) totdat de synthetische data de gewenste smaak heeft
-
-::: aside
-
-NOOT: Dit proces richt zich voornamelijk op de bruikbaarheid van synthetische data, en gaat voorbij aan mogelijke privacy-risico's. Hoe complexer het generatieve model, hoe groter de privacy risico's. Deze risico's moeten ook geanalyseerd worden!
-
-:::
+4. Itereer tussen (2.) en (3.) totdat de synthetische data naar wens is
 
 
 # De privacy-utility trade-off
@@ -147,7 +141,7 @@ Of: welk privacy risico is aanvaardbaar om een zo bruikbaar mogelijke dataset te
 
 - Op dat moment is er geen privacybescherming meer
 
-## Utility versus privacy
+## Privacy versus utiliteit
 
 
 ```{r}
@@ -180,21 +174,6 @@ ggplot(NULL, aes(x, y)) +
 
 # Wanneer is synthetische data bruikbaar?
 
-## Kwaliteitsmaten voor synthetische data
-
-- Fit-for-purpose utiliteitsmaten
-
-- Analyse-specifieke utiliteitsmaten
-
-- Algemene / globale utiliteitsmaten
-
-## Fit-for-purpose maten
-
-- De synthetische data moet geschikt zijn voor het doel waarvoor het gebruikt wordt
-
-
-# De kwaliteit van synthetische data _proeven_
-
 ##
 
 ### Intuïtief
@@ -209,25 +188,150 @@ ggplot(NULL, aes(x, y)) +
 
 - Geven analyses van de synthetische en geobserveerde data vergelijkbare resultaten?
 
-# De kwaliteit van synthetische data hangt af van waarvoor het gebruikt wordt
 
-Maar we weten vaak niet waarvoor deze gebruikt wordt...
+## Kwaliteitsmaten voor synthetische data
 
-## 
+<br>
+
+__Fit-for-purpose utiliteitsmaten__
+
+<br>
+
+__Analyse-specifieke utiliteitsmaten__
+
+<br>
+
+__Algemene / globale utiliteitsmaten__
+
+## Fit-for-purpose maten
+
+<br>
+
+::: {.callout-tip title="Startpunt van utiliteitsevaluatie"}
+
+De synthetische data moet geschikt zijn voor het doel waartoe het dient
+
+:::
+
+<br>
+
+Juiste variabele-typen: zijn categorische variabelen nog categorische variabelen?
+
+Plausibiliteit: negatieve leeftijden, peuters met een masterdiploma
+
+__Visuele inspectie (vaak de belangrijkste methode)__
+
+::: {.notes}
+
+Hoewel het allemaal heel simpel klinkt, is het in mijn ogen het belangrijkste aspect van het beoordelen van de kwaliteit van synthetische data. Als er op het meest basale niveau verschillen zitten, is de kans groot dat andere aspecten ook niet kloppen. 
+Uiteraard, als de variabelen-typen niet kloppen (i.e., een categorische variabele is een numerieke variabele zonder labels geworden), is het moeilijk om de data te gebruiken. Kunnen de goede analyses nog wel uitgevoerd worden?
+
+Hetzelfde geldt voor plausibiliteit. Wanneer de data negatieve leeftijden bevat, peuters met een PhD
+
+:::
+
+
+## Voorbeeld I 
+
+<br>
+
+Is dit "plausibele" synthetische data?
+
+<br>
+
+```{r}
+library(ggplot2)
+set.seed(123)
+n <- 500
+obs <- rmultinom(n, 1, rep(1/5, 5)) |> apply(2, which.max)
+syn <- rnorm(n, 3, sqrt(2))
+
+psych::describe(data.frame(Observed  = obs, Synthetic = syn)) |>
+  dplyr::select(2, 3, 4, 5, 11)
+```
+
+## Het belang van visuele inspectie
+
+Want kwantitatieve maten kunnen misleidend zijn
+
+```{r}
+data.frame(X = c(obs, syn),
+           Data = rep(c("Observed", "Synthetic"), each = n)) |> 
+  ggplot(aes(X, fill = Data)) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c("lightblue", "hotpink3")) +
+  ggdark::dark_mode()
+```
+
+# Is dit een probleem?
+
+## Analyse-specifieke utiliteitsmaten
+
+Als je weet welke analyse uitgevoerd gaat worden, kun je synthetische data evalueren voor dit doel
+
+```{r}
+CIs <- data.frame(Mean = c(mean(obs), mean(syn))) |>
+  cbind(sapply(list(obs, syn), \(x) lm(x ~ 1) |> confint()) |> t())
+
+rownames(CIs) <- c("Observed", "Synthetic")
+colnames(CIs) <- c("Gemiddelde", "2.5%", "97.5%")
+
+CIs
+```
+
+```{r}
+CI_o <- ((min(CIs$`97.5%`) - max(CIs$`2.5%`)) / (CIs$`97.5%`[1] - CIs$`2.5%`[1]) +
+  (min(CIs$`97.5%`) - max(CIs$`2.5%`)) / (CIs$`97.5%`[2] - CIs$`2.5%`[2]))/2
+```
+
+<br>
+
+__Betrouwbaarheidsinterval overlap:__ $`r round(CI_o, 3)`$
+
+## Analyse-specifieke utiliteitsmaten
+
+Als je weet dat de gebruiker een lineair regressiemodel wil schatten:
+
+- Evalueer gemiddeldes en covariantiematrix; als deze vergelijkbaar zijn, geeft je synthetische data vergelijkbare resultaten
+
+Als je weet dat de gebruiker een predictiemodel wil toepassen: 
+
+- Evalueer voorspellende prestaties in de synthetische data
+
+## Bewijs dat covariantiematrix en gemiddelden genoeg zijn
+
+```{r}
+#| echo: true
+N <- 1000
+P <- 5
+S <- diag(P) + 1
+X <- rnorm(N*P) |> matrix(N) %*% chol(S)
+Y <- X %*% c(0:4/5) + rnorm(N)
+
+coef(lm(Y ~ X))
+
+Vobs <- var(cbind(X, Y))
+b <- solve(Vobs[1:5, 1:5]) %*% Vobs[1:5, 6]
+b0 <- mean(Y) - colMeans(X) %*% b
+c(b0, b)
+```
+
+# Maar hoe weten we welke analyses met de synthetische data uitgevoerd worden?
+
+
+## Globale utiliteitsmaten
 
 __Als de synthetische en de geobserveerde data gelijke verdelingen hebben, zouden ze vergelijkbare resultaten moeten geven__
 
 ```{r}
-ggplot() +
-  stat_function(fun = dnorm, args = list(mean = 1, sd = 1),
-                col = "lightblue", linewidth = 1, linetype = 1) +
-  stat_function(fun = dnorm, args = list(mean = 0, sd = sqrt(2)),
-                col = "navy", linewidth = 1, linetype = 4) +
-  theme_void() +
-  xlim(-5, 5) +
-  ylim(0, 0.5) +
-  ylab(NULL)
+data.frame(X = c(obs, syn),
+           Data = rep(c("Observed", "Synthetic"), each = n)) |> 
+  ggplot(aes(X, fill = Data)) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c("lightblue", "hotpink3")) +
+  ggdark::dark_mode()
 ```
+
 
 ## Bestaande kwaliteitsmaten: $pMSE$
 
@@ -239,23 +343,25 @@ ggplot() +
 
 4. Vergelijk $pMSE$ met verwachte waarde onder een correct generatief model
 
-Kleine $pMSE$ waardes: synthetische data lijkt op echte data.
+# $pMSE$
 
-Nadeel: Welk voorspelmodel? Hoog-dimensionele data?
+Intuitief en flexibel, makkelijk te berekenen
 
-## Bestaande kwaliteitsmaten: Kullback-Leibler divergence
+Maar soms te simpel
 
-<br>
+Model specificatie kan lastig zijn
 
-$$KL(\boldsymbol{X}_{\text{syn}}, \boldsymbol{X}_{\text{obs}}) = \int \log\Bigg(\frac{p(\boldsymbol{X}_{\text{syn}})}{p(\boldsymbol{X}_{\text{obs}})}\Bigg) p(\boldsymbol{X}_\text{syn})$$
+```{r}
+S_pMSE <- synthpop::utility.tab.data.frame(
+  data.frame(x = obs),
+  data.frame(x = syn),
+  vars = "x",
+)$S_pMSE
+```
 
-<br>
+De $pMSE$-ratio in ons voorbeeld: $`r round(S_pMSE, 3)`$
 
-Elegante methode
-
-Praktisch moeilijk te schatten
-
-# Een nieuw raamwerk
+# Een density ratio raamwerk
 
 Density ratios^[Zie _Masashi, Suzuki & Kanamori (2012). Density ratio estimation in machine learning._] als kwaliteitsmaat
 
@@ -274,10 +380,16 @@ Het nadeel hiervan is dat je schattingsfouten maakt bij beide kansverdelingen, e
 Onderzoek in dit veld heeft aangetoond dat je een nauwkeurigere schatting van de density ratio krijgt door deze direct te schatten. Hoe je dat kan doen kom ik later even op terug.
 ::: 
 
-## Density ratios
+## Density ratios als utiliteitsmaat
+
 
 ```{r}
+#| fig-align: center
 library(patchwork)
+library(ggplot2)
+
+
+
 dlaplace <- function(x, mu = 0, sd = 1) exp(-abs(x-mu)/(sd / sqrt(2))) / (2*(sd / sqrt(2)))
 dratio_lap_norm <- function(x, mu = 0, sd = 1) {
   dnorm(x, mu, sd) / dlaplace(x, mu, sd)
@@ -285,131 +397,138 @@ dratio_lap_norm <- function(x, mu = 0, sd = 1) {
 
 ggplot() +
   stat_function(fun = dlaplace, args = list(mu = 0, sd = 1),
-                col = "lightblue", linewidth = 1, linetype = 1) +
+                col = "#FDAE61", linewidth = 1, linetype = 1) +
   stat_function(fun = dnorm, args = list(mean = 0, sd = 1),
-                col = "navy", linewidth = 1, linetype = 4) +
+                col = "#F46D43", linewidth = 1, linetype = 4) +
   xlim(-5, 5) +
   ylim(0, 0.8) +
-  theme_classic() +
+  ggdark::dark_mode() +
   ylab(NULL) +
 ggplot() +
   stat_function(fun = dratio_lap_norm, args = list(mu = 0, sd = 1),
-                linewidth = 1, linetype = 1) +
+                linewidth = 1, linetype = 1, col = "#FEE08B") +
   xlim(-5, 5) +
   ylim(0, 2) +
-  theme_classic() +
+  ggdark::dark_mode() +
   ylab(NULL) +
 ggplot() +
   stat_function(fun = dnorm, args = list(mean = 0, sd = 1),
-                col = "lightblue", linewidth = 1, linetype = 1) +
+                col = "#FDAE61", linewidth = 1, linetype = 1) +
   stat_function(fun = dnorm, args = list(mean = 0, sd = 1),
-                col = "navy", linewidth = 1, linetype = 4) +
+                col = "#F46D43", linewidth = 1, linetype = 4) +
   xlim(-5, 5) +
   ylim(0, 0.8) +
-  theme_classic() +
+  ggdark::dark_mode() +
   ylab(NULL) +
 ggplot() +
-  geom_abline(intercept = 1, slope = 0, linewidth = 1, linetype = 1) +
-  theme_classic() +
+  geom_abline(intercept = 1, slope = 0, linewidth = 1, linetype = 1,
+              col = "#FEE08B") +
+  ggdark::dark_mode() +
   xlim(-5, 5) +
   ylim(0, 2) +
   ylab(NULL)
 ```
 
-## Density ratios in de praktijk {.smaller}
+## Density ratios schatten
 
 1. Schat de density ratio met een non-parametrische methode
 
-- Unconstrained least-squares importance fitting: $r(\boldsymbol{X}) = \boldsymbol{\psi(X)}\theta$.
+- Geïmplementeerd in `R`-package [`densityratio`](https://github.com/thomvolker/densityratio).
 
-- Implemented in `R`-package [`densityratio`](https://github.com/thomvolker/densityratio).
-
-2. Bereken een discrepantie maat voor de synthetische data
-
-- Pearson divergence: $$\hat{\text{PE}}(\boldsymbol{X}_{\text{syn}}, \boldsymbol{X}_{\text{obs}}) = \frac{1}{2n_{\text{syn}}} \sum^{n_{\text{syn}}}_{i=1} r(X^{(i)}_{\text{syn}}) - \frac{1}{n_{\text{obs}}} \sum^{n_{\text{obs}}}_{j=1} r(X^{(j)}_{\text{obs}}) + \frac{1}{2}$$
+2. Bereken een discrepantie maat voor de synthetische data (Kullback-Leibler divergence, Pearson divergence)
 
 3. Vergelijk de Pearson divergence voor verschillende data sets
 
 4. Optioneel: Toets de nulhypothese $p(\boldsymbol{X}_{\text{syn}}) = p(\boldsymbol{X}_{\text{obs}})$ d.m.v. een permutatietest.
 
-::: {.notes}
-Hier zie je direct dat de density ratio direct geschat wordt, zonder eerst de losse kansverdelingen te schatten.
-We hebben namelijk een model voor de ratio. Dit is een lineair model, wat relatief eenvoudig is om te schatten.
-Dit lineaire model werkt, omdat we werken met een expansie van de originele data. 
-Psi van X is doorgaans een non-lineaire transformatie van de data, meestal door middel van kernels. 
-Ik wil nu niet echt op de details ingaan, maar in het kort zijn kernels een non-lineaire transformatie, die de originele data uitdrukt als een similariteitsmatrix, met daarin de similariteit van elke observatie ten opzichte van elke andere observatie. 
-Als observaties vergelijkbare waardes op alle variabelen hebben krijgen ze een hoge similariteitsscore, als ze juist ver van elkaar afstaan een lage similariteitsscore.
-:::
+## Density ratio in ons voorbeeld
 
-## Density ratios voor synthetische data (univariaat)
+:::: {.columns}
 
-![](files/densities.png)
-
-::: {.notes}
-Om te kijken hoe goed deze methode werkt hebben we eerst een kleine simulatie met univariate voorbeelden gedaan. 
-Wat je hier zit is denk ik typisch voor het synthetische data veld. We hebben een complexe verdeling van de data, die we benaderen met een relatief simpele normaalverdeling.
-In deze voorbeelden zie je een Laplace verdeling, een locatie-schaal t-verdeling, een lognormale verdeling, en een normale verdeling. Deze verdelingen modelleren we met een normale verdeling die hetzelfde gemiddelde en dezelfde variantie heeft als de echte verdeling.
-In het laatste geval is het synthetische data model dus correct. 
-Vervolgens kijken we hoe goed de geschatte density ratio de ware density ratio benaderd.
-:::
-
-## Density ratios voor synthetische data (univariaat)
-
-![](files/density-ratios.png)
-
-
-
-## Density ratios voor synthetische data (univariaat)
-
-Power en type I error rate
+::: {.column width="60%"}
 
 ```{r}
-tibble::tibble(Data = c("Laplace", "Log-normal", "lst", "Normal"),
-               `Density ratio` = c(0.620, 1.000, 0.495, 0.050),
-               `Kolmogorov-Smirnov` = c(0.375, 1.000, 0.235, 0.045),
-               `pMSE` = c(0.610, 1.000, 0.495, 0.040))
+library(densityratio)
 ```
 
-## Density ratios voor synthetische data (multivariaat) {.smaller}
 
-### U.S. Current Population Survey (n = 5000)^[Dank aan Jörg Drechsler voor het beschikbaar stellen van de data.]
+```{r}
+#| cache: true
+#| echo: true
 
-- Vier continue variabelen (_age, income, social security payments, household income_)
-- Vier categorische variabelen (_sex, race, marital status, educational attainment_)
+library(densityratio)
+fit <- ulsif(syn, obs)
+summary(fit, test = TRUE, parallel = TRUE)
+```
 
-### Synthesische modellen
+:::
+
+::: {.column width="40%"}
+
+```{r}
+#| fig-width: 5
+ggplot(NULL, aes(x = syn, y = predict(fit))) +
+  geom_point(col = "darkorange") +
+  ggdark::dark_mode() +
+  ylab(NULL)
+```
+
+:::
+
+::::
+
+## Density ratios voor multivariate synthetische data {.smaller}
+
+### U.S. Current Population Survey (n = 5000)^[We zijn Jörg Drechsler dankbaar voor het delen van de data.]
+
+- Vier continue variabelen (_leeftijd, inkomen, sociale uitkeringen, eigendomsbelasting_)
+- Vier categorische variabelen (_geslacht, etniciteit, huwelijkse staat, opleidingsniveau_)
+
+### Synthetische data modellen
 
 (Multinomiale) logistische regressie voor categorische variabelen
 
 1. Lineaire regressie
-2. Lineaire regressie met transformaties (derdemachtswortel)
-3. Lineaire regressie met transformaties en semi-continu modelleren
+2. Lineaire regressie met transformaties (kubieke wortel)
+3. Lineaire regressie met transformaties and semi-continu modelleren
 
-::: {.notes}
-Vervolgens hebben we dezelfde density ratio procedure ook toegepast op een multivariaat voorbeeld, waarin we een data set met 8 variabelen hebben gesynthetiseerd. 
-Hierbij hebben we de synthesis modellen stapsgewijs verbeterd, en hebben we gekeken of deze verbeteringen werden opgepikt door de density ratio schattingen.
-En dan in het bijzonder de Pearson divergence zoals hierboven beschreven.
-Laten we beginnen met de categorische variabelen, deze zijn altijd met logistische of multinomiale logistische regressie geschat. Dit werkte best wel goed, dus hier hebben we niets aan verbeterd. 
-Voor de continue variabelen zijn we begonnen met een simpel lineair model, en deze hebben we stapsgewijs verbeterd, eerst door de variabelen te transformeren, en vervolgens door een puntmassa op de waarde 0 apart te simuleren, voordat de rest van de data gesynthetiseerd werd middels een lineair model.
-:::
-
-## Synthetische data (visueel)
-
-![](files/syn-vars.png)
-
-## Kwaliteit van synthetische data
+## Utility of the synthetic data
 
 ![](files/syn-PEs.png)
 
-## Nadelen van density ratios
+# Terug naar de kern
 
-Geschiktheid voor categorische data moet onderzocht worden
+## Samenvatting
 
-- In bovenstaand voorbeeld werd categorische data simpelweg getransformeerd naar numerieke data (vier categoriën --> 1, 2, 3, 4)
+<br>
 
-Privacy risico's van density ratio waardes?
+Hoe specifieker hoe beter
 
-# Bijkomende voordelen van density ratios
+<br>
+
+Maar soms kan het niet specifiek, omdat je het doel niet kent
+
+<br>
+
+Dan blijft het belangrijk om met specifieke maten te evalueren
+
+<br>
+
+Maar kunnen algemene maten ook heel nuttig zijn
+
+# Negeer niet de privacy risico's, synthetische data kan té realistisch zijn
+
+
+# Dank voor jullie aandacht!
+
+Vragen?
+
+<br>
+<br>
+
+Nog meer vragen?
+
+- [t.b.volker@uu.nl](mailto:t.b.volker@uu.nl)
 
 ## Kwaliteit van synthetische data punten
 
@@ -459,14 +578,3 @@ can be approximated as
 $$
 \sum^{n_{\text{syn}}}_{i=1} \log(r(\boldsymbol{X}_\text{syn}))/n_{\text{syn}}.
 $$
-
-# Dank voor jullie aandacht!
-
-Vragen?
-
-<br>
-<br>
-
-Nog meer vragen?
-
-- [t.b.volker@uu.nl](mailto:t.b.volker@uu.nl)

@@ -29,6 +29,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
   </style>
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
@@ -379,8 +444,8 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <p><img data-src="files/me_square.jpg"></p>
 </div><div class="column" style="width:60%;">
 <ul>
-<li><p>MSc. in Methoden en Statistiek &amp; Sociologie</p></li>
-<li><p>PhD kandidaat bij Universiteit Utrecht en CBS</p>
+<li><p>PhD kandidaat bij Universiteit Utrecht en CBS</p></li>
+<li><p>MSc. in Methoden en Statistiek &amp; Sociologie</p>
 <ul>
 <li>Doel: Doorontwikkelen van veilige (!) data synthesis technieken</li>
 </ul></li>
@@ -405,9 +470,9 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <section id="open-materialen" class="slide level2">
 <h2>Open materialen</h2>
 <p>Deze presentatie staat online op</p>
-<p><a href="https://thomvolker.github.io/npso">https://thomvolker.github.io/npso</a></p>
+<p><a href="https://thomvolker.github.io/utiliteit">https://thomvolker.github.io/utiliteit</a></p>
 <p>De broncode en resultaten zijn te vinden op</p>
-<p><a href="https://github.com/thomvolker/npso">https://github.com/thomvolker/npso</a></p>
+<p><a href="https://github.com/thomvolker/utiliteit">https://github.com/thomvolker/utiliteit</a></p>
 
 <aside><div>
 <p>Deze presentatie is mede tot stand gekomen dankzij bijdragen van Gerko Vink, Stef van Buuren, Erik-Jan van Kesteren en Peter-Paul de Wolf.</p>
@@ -437,12 +502,9 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <li><p>Creëer synthetische data met simpele/algemene modellen</p></li>
 <li><p>Evalueer of de synthetische data de gewenste kwaliteit heeft</p></li>
 <li><p>Indien nodig, voeg complexiteit toe (specifieke modellen, transformations, interacties)</p></li>
-<li><p>Itereer tussen (2.) en (3.) totdat de synthetische data de gewenste smaak heeft</p></li>
+<li><p>Itereer tussen (2.) en (3.) totdat de synthetische data naar wens is</p></li>
 </ol>
-
-<aside><div>
-<p>NOOT: Dit proces richt zich voornamelijk op de bruikbaarheid van synthetische data, en gaat voorbij aan mogelijke privacy-risico’s. Hoe complexer het generatieve model, hoe groter de privacy risico’s. Deze risico’s moeten ook geanalyseerd worden!</p>
-</div></aside></section></section>
+</section></section>
 <section>
 <section id="de-privacy-utility-trade-off" class="title-slide slide level1 center">
 <h1>De privacy-utility trade-off</h1>
@@ -465,32 +527,13 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <li><p>Op dat moment is er geen privacybescherming meer</p></li>
 </ul>
 </section>
-<section id="utility-versus-privacy" class="slide level2">
-<h2>Utility versus privacy</h2>
+<section id="privacy-versus-utiliteit-1" class="slide level2">
+<h2>Privacy versus utiliteit</h2>
 
 <img data-src="index_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section></section>
 <section>
 <section id="wanneer-is-synthetische-data-bruikbaar" class="title-slide slide level1 center">
 <h1>Wanneer is synthetische data bruikbaar?</h1>
-
-</section>
-<section id="kwaliteitsmaten-voor-synthetische-data" class="slide level2">
-<h2>Kwaliteitsmaten voor synthetische data</h2>
-<ul>
-<li><p>Fit-for-purpose utiliteitsmaten</p></li>
-<li><p>Analyse-specifieke utiliteitsmaten</p></li>
-<li><p>Algemene / globale utiliteitsmaten</p></li>
-</ul>
-</section>
-<section id="fit-for-purpose-maten" class="slide level2">
-<h2>Fit-for-purpose maten</h2>
-<ul>
-<li>De synthetische data moet geschikt zijn voor het doel waarvoor het gebruikt wordt</li>
-</ul>
-</section></section>
-<section>
-<section id="de-kwaliteit-van-synthetische-data-proeven" class="title-slide slide level1 center">
-<h1>De kwaliteit van synthetische data <em>proeven</em></h1>
 
 </section>
 <section id="section" class="slide level2">
@@ -505,17 +548,184 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <li><p>Kunnen we de synthetische data onderscheiden van de echte data?</p></li>
 <li><p>Geven analyses van de synthetische en geobserveerde data vergelijkbare resultaten?</p></li>
 </ul>
+</section>
+<section id="kwaliteitsmaten-voor-synthetische-data" class="slide level2">
+<h2>Kwaliteitsmaten voor synthetische data</h2>
+<p><br></p>
+<p><strong>Fit-for-purpose utiliteitsmaten</strong></p>
+<p><br></p>
+<p><strong>Analyse-specifieke utiliteitsmaten</strong></p>
+<p><br></p>
+<p><strong>Algemene / globale utiliteitsmaten</strong></p>
+</section>
+<section id="fit-for-purpose-maten" class="slide level2">
+<h2>Fit-for-purpose maten</h2>
+<p><br></p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Startpunt van utiliteitsevaluatie</strong></p>
+</div>
+<div class="callout-content">
+<p>De synthetische data moet geschikt zijn voor het doel waartoe het dient</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Juiste variabele-typen: zijn categorische variabelen nog categorische variabelen?</p>
+<p>Plausibiliteit: negatieve leeftijden, peuters met een masterdiploma</p>
+<p><strong>Visuele inspectie (vaak de belangrijkste methode)</strong></p>
+<aside class="notes">
+<p>Hoewel het allemaal heel simpel klinkt, is het in mijn ogen het belangrijkste aspect van het beoordelen van de kwaliteit van synthetische data. Als er op het meest basale niveau verschillen zitten, is de kans groot dat andere aspecten ook niet kloppen. Uiteraard, als de variabelen-typen niet kloppen (i.e., een categorische variabele is een numerieke variabele zonder labels geworden), is het moeilijk om de data te gebruiken. Kunnen de goede analyses nog wel uitgevoerd worden?</p>
+<p>Hetzelfde geldt voor plausibiliteit. Wanneer de data negatieve leeftijden bevat, peuters met een PhD</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="voorbeeld-i" class="slide level2">
+<h2>Voorbeeld I</h2>
+<p><br></p>
+<p>Is dit “plausibele” synthetische data?</p>
+<p><br></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">skew</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Observed</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">3.07600</td>
+<td style="text-align: right;">1.402197</td>
+<td style="text-align: right;">3.000000</td>
+<td style="text-align: right;">-0.0304055</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Synthetic</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">3.08803</td>
+<td style="text-align: right;">1.445419</td>
+<td style="text-align: right;">3.094385</td>
+<td style="text-align: right;">0.1730267</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="het-belang-van-visuele-inspectie" class="slide level2">
+<h2>Het belang van visuele inspectie</h2>
+<p>Want kwantitatieve maten kunnen misleidend zijn</p>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="is-dit-een-probleem" class="title-slide slide level1 center">
+<h1>Is dit een probleem?</h1>
+
+</section>
+<section id="analyse-specifieke-utiliteitsmaten" class="slide level2">
+<h2>Analyse-specifieke utiliteitsmaten</h2>
+<p>Als je weet welke analyse uitgevoerd gaat worden, kun je synthetische data evalueren voor dit doel</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Gemiddelde</th>
+<th style="text-align: right;">2.5%</th>
+<th style="text-align: right;">97.5%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Observed</td>
+<td style="text-align: right;">3.07600</td>
+<td style="text-align: right;">2.952795</td>
+<td style="text-align: right;">3.199205</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Synthetic</td>
+<td style="text-align: right;">3.08803</td>
+<td style="text-align: right;">2.961028</td>
+<td style="text-align: right;">3.215032</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>Betrouwbaarheidsinterval overlap:</strong> <span class="math inline">0.952</span></p>
+</section>
+<section id="analyse-specifieke-utiliteitsmaten-1" class="slide level2">
+<h2>Analyse-specifieke utiliteitsmaten</h2>
+<p>Als je weet dat de gebruiker een lineair regressiemodel wil schatten:</p>
+<ul>
+<li>Evalueer gemiddeldes en covariantiematrix; als deze vergelijkbaar zijn, geeft je synthetische data vergelijkbare resultaten</li>
+</ul>
+<p>Als je weet dat de gebruiker een predictiemodel wil toepassen:</p>
+<ul>
+<li>Evalueer voorspellende prestaties in de synthetische data</li>
+</ul>
+</section>
+<section id="bewijs-dat-covariantiematrix-en-gemiddelden-genoeg-zijn" class="slide level2">
+<h2>Bewijs dat covariantiematrix en gemiddelden genoeg zijn</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>N <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>P <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>S <span class="ot">&lt;-</span> <span class="fu">diag</span>(P) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N<span class="sc">*</span>P) <span class="sc">|&gt;</span> <span class="fu">matrix</span>(N) <span class="sc">%*%</span> <span class="fu">chol</span>(S)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>Y <span class="ot">&lt;-</span> X <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">4</span><span class="sc">/</span><span class="dv">5</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(N)</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">coef</span>(<span class="fu">lm</span>(Y <span class="sc">~</span> X))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept)           X1           X2           X3           X4           X5 
+-0.009522669  0.031481189  0.224779583  0.378608643  0.576827811  0.778974409 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Vobs <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">cbind</span>(X, Y))</span>
+<span id="cb3-2"><a href="#cb3-2"></a>b <span class="ot">&lt;-</span> <span class="fu">solve</span>(Vobs[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]) <span class="sc">%*%</span> Vobs[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">6</span>]</span>
+<span id="cb3-3"><a href="#cb3-3"></a>b0 <span class="ot">&lt;-</span> <span class="fu">mean</span>(Y) <span class="sc">-</span> <span class="fu">colMeans</span>(X) <span class="sc">%*%</span> b</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">c</span>(b0, b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.009522669  0.031481189  0.224779583  0.378608643  0.576827811
+[6]  0.778974409</code></pre>
+</div>
+</div>
 </section></section>
 <section>
-<section id="de-kwaliteit-van-synthetische-data-hangt-af-van-waarvoor-het-gebruikt-wordt" class="title-slide slide level1 center">
-<h1>De kwaliteit van synthetische data hangt af van waarvoor het gebruikt wordt</h1>
-<p>Maar we weten vaak niet waarvoor deze gebruikt wordt…</p>
+<section id="maar-hoe-weten-we-welke-analyses-met-de-synthetische-data-uitgevoerd-worden" class="title-slide slide level1 center">
+<h1>Maar hoe weten we welke analyses met de synthetische data uitgevoerd worden?</h1>
+
 </section>
-<section id="section-1" class="slide level2">
-<h2></h2>
+<section id="globale-utiliteitsmaten" class="slide level2">
+<h2>Globale utiliteitsmaten</h2>
 <p><strong>Als de synthetische en de geobserveerde data gelijke verdelingen hebben, zouden ze vergelijkbare resultaten moeten geven</strong></p>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
 <section id="bestaande-kwaliteitsmaten-pmse" class="slide level2">
 <h2>Bestaande kwaliteitsmaten: <span class="math inline">pMSE</span></h2>
 <ol type="1">
@@ -524,20 +734,18 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <li><p>Calculate <span class="math inline">pMSE</span> as <span class="math inline">\sum^N_{i=1} (\pi_i - c)^2/N</span>, met <span class="math inline">c = n_{\text{syn}} / (n_{\text{syn}} + n_{\text{obs}})</span></p></li>
 <li><p>Vergelijk <span class="math inline">pMSE</span> met verwachte waarde onder een correct generatief model</p></li>
 </ol>
-<p>Kleine <span class="math inline">pMSE</span> waardes: synthetische data lijkt op echte data.</p>
-<p>Nadeel: Welk voorspelmodel? Hoog-dimensionele data?</p>
-</section>
-<section id="bestaande-kwaliteitsmaten-kullback-leibler-divergence" class="slide level2">
-<h2>Bestaande kwaliteitsmaten: Kullback-Leibler divergence</h2>
-<p><br></p>
-<p><span class="math display">KL(\boldsymbol{X}_{\text{syn}}, \boldsymbol{X}_{\text{obs}}) = \int \log\Bigg(\frac{p(\boldsymbol{X}_{\text{syn}})}{p(\boldsymbol{X}_{\text{obs}})}\Bigg) p(\boldsymbol{X}_\text{syn})</span></p>
-<p><br></p>
-<p>Elegante methode</p>
-<p>Praktisch moeilijk te schatten</p>
 </section></section>
+<section id="pmse" class="title-slide slide level1 center">
+<h1><span class="math inline">pMSE</span></h1>
+<p>Intuitief en flexibel, makkelijk te berekenen</p>
+<p>Maar soms te simpel</p>
+<p>Model specificatie kan lastig zijn</p>
+<p>De <span class="math inline">pMSE</span>-ratio in ons voorbeeld: <span class="math inline">3.62</span></p>
+</section>
+
 <section>
-<section id="een-nieuw-raamwerk" class="title-slide slide level1 center">
-<h1>Een nieuw raamwerk</h1>
+<section id="een-density-ratio-raamwerk" class="title-slide slide level1 center">
+<h1>Een density ratio raamwerk</h1>
 <p>Density ratios<sup>1</sup> als kwaliteitsmaat</p>
 <p><br></p>
 <p><span class="math display">r(x) = \frac{p(\boldsymbol{X}_{\text{syn }})}{p(\boldsymbol{X}_{obs})}</span> <br> <br></p>
@@ -555,158 +763,107 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
           display:block!important;
       }</style></aside>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Zie <em>Masashi, Suzuki &amp; Kanamori (2012). Density ratio estimation in machine learning.</em></p></li></ol></aside></section>
-<section id="density-ratios" class="slide level2">
-<h2>Density ratios</h2>
+<section id="density-ratios-als-utiliteitsmaat" class="slide level2">
+<h2>Density ratios als utiliteitsmaat</h2>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
-<section id="density-ratios-in-de-praktijk" class="slide level2 smaller">
-<h2>Density ratios in de praktijk</h2>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="density-ratios-schatten" class="slide level2">
+<h2>Density ratios schatten</h2>
 <ol type="1">
 <li>Schat de density ratio met een non-parametrische methode</li>
 </ol>
 <ul>
-<li><p>Unconstrained least-squares importance fitting: <span class="math inline">r(\boldsymbol{X}) = \boldsymbol{\psi(X)}\theta</span>.</p></li>
-<li><p>Implemented in <code>R</code>-package <a href="https://github.com/thomvolker/densityratio"><code>densityratio</code></a>.</p></li>
+<li>Geïmplementeerd in <code>R</code>-package <a href="https://github.com/thomvolker/densityratio"><code>densityratio</code></a>.</li>
 </ul>
 <ol start="2" type="1">
-<li>Bereken een discrepantie maat voor de synthetische data</li>
-</ol>
-<ul>
-<li>Pearson divergence: <span class="math display">\hat{\text{PE}}(\boldsymbol{X}_{\text{syn}}, \boldsymbol{X}_{\text{obs}}) = \frac{1}{2n_{\text{syn}}} \sum^{n_{\text{syn}}}_{i=1} r(X^{(i)}_{\text{syn}}) - \frac{1}{n_{\text{obs}}} \sum^{n_{\text{obs}}}_{j=1} r(X^{(j)}_{\text{obs}}) + \frac{1}{2}</span></li>
-</ul>
-<ol start="3" type="1">
+<li><p>Bereken een discrepantie maat voor de synthetische data (Kullback-Leibler divergence, Pearson divergence)</p></li>
 <li><p>Vergelijk de Pearson divergence voor verschillende data sets</p></li>
 <li><p>Optioneel: Toets de nulhypothese <span class="math inline">p(\boldsymbol{X}_{\text{syn}}) = p(\boldsymbol{X}_{\text{obs}})</span> d.m.v. een permutatietest.</p></li>
 </ol>
-<aside class="notes">
-<p>Hier zie je direct dat de density ratio direct geschat wordt, zonder eerst de losse kansverdelingen te schatten. We hebben namelijk een model voor de ratio. Dit is een lineair model, wat relatief eenvoudig is om te schatten. Dit lineaire model werkt, omdat we werken met een expansie van de originele data. Psi van X is doorgaans een non-lineaire transformatie van de data, meestal door middel van kernels. Ik wil nu niet echt op de details ingaan, maar in het kort zijn kernels een non-lineaire transformatie, die de originele data uitdrukt als een similariteitsmatrix, met daarin de similariteit van elke observatie ten opzichte van elke andere observatie. Als observaties vergelijkbare waardes op alle variabelen hebben krijgen ze een hoge similariteitsscore, als ze juist ver van elkaar afstaan een lage similariteitsscore.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="density-ratios-voor-synthetische-data-univariaat" class="slide level2">
-<h2>Density ratios voor synthetische data (univariaat)</h2>
+<section id="density-ratio-in-ons-voorbeeld" class="slide level2">
+<h2>Density ratio in ons voorbeeld</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-12_cd79f24f0f680eea81d5c67fabd46b77">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(densityratio)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>fit <span class="ot">&lt;-</span> <span class="fu">ulsif</span>(syn, obs)</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">summary</span>(fit, <span class="at">test =</span> <span class="cn">TRUE</span>, <span class="at">parallel =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+ulsif(df_numerator = syn, df_denominator = obs)
 
-<img data-src="files/densities.png" class="r-stretch"><aside class="notes">
-<p>Om te kijken hoe goed deze methode werkt hebben we eerst een kleine simulatie met univariate voorbeelden gedaan. Wat je hier zit is denk ik typisch voor het synthetische data veld. We hebben een complexe verdeling van de data, die we benaderen met een relatief simpele normaalverdeling. In deze voorbeelden zie je een Laplace verdeling, een locatie-schaal t-verdeling, een lognormale verdeling, en een normale verdeling. Deze verdelingen modelleren we met een normale verdeling die hetzelfde gemiddelde en dezelfde variantie heeft als de echte verdeling. In het laatste geval is het synthetische data model dus correct. Vervolgens kijken we hoe goed de geschatte density ratio de ware density ratio benaderd.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="density-ratios-voor-synthetische-data-univariaat-1" class="slide level2">
-<h2>Density ratios voor synthetische data (univariaat)</h2>
-
-<img data-src="files/density-ratios.png" class="r-stretch"></section>
-<section id="density-ratios-voor-synthetische-data-univariaat-2" class="slide level2">
-<h2>Density ratios voor synthetische data (univariaat)</h2>
-<p>Power en type I error rate</p>
+Kernel Information:
+  Kernel type: Gaussian with L2 norm distances
+  Number of kernels: 200
+  Optimal sigma: 0.1294688
+  Optimal lambda: 0.1623777
+  Optimal kernel weights (loocv): num [1:201] 2.0966 0.3538 0.4966 -0.2634 0.0313 ...
+ 
+Pearson divergence between P(nu) and P(de): 2.421
+Pr(P(nu)=P(de)) &lt; .001
+Bonferroni-corrected for testing with r(x) = P(nu)/P(de) AND r*(x) = P(de)/P(nu).</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
 <div class="cell">
 <div class="cell-output-display">
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Data</th>
-<th style="text-align: right;">Density ratio</th>
-<th style="text-align: right;">Kolmogorov-Smirnov</th>
-<th style="text-align: right;">pMSE</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Laplace</td>
-<td style="text-align: right;">0.620</td>
-<td style="text-align: right;">0.375</td>
-<td style="text-align: right;">0.610</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Log-normal</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">lst</td>
-<td style="text-align: right;">0.495</td>
-<td style="text-align: right;">0.235</td>
-<td style="text-align: right;">0.495</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Normal</td>
-<td style="text-align: right;">0.050</td>
-<td style="text-align: right;">0.045</td>
-<td style="text-align: right;">0.040</td>
-</tr>
-</tbody>
-</table>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="480"></p>
+</div>
 </div>
 </div>
 </div>
 </section>
-<section id="density-ratios-voor-synthetische-data-multivariaat" class="slide level2 smaller">
-<h2>Density ratios voor synthetische data (multivariaat)</h2>
+<section id="density-ratios-voor-multivariate-synthetische-data" class="slide level2 smaller">
+<h2>Density ratios voor multivariate synthetische data</h2>
 <h3 id="u.s.-current-population-survey-n-5000">U.S. Current Population Survey (n = 5000)<sup>1</sup></h3>
 <ul>
-<li>Vier continue variabelen (<em>age, income, social security payments, household income</em>)</li>
-<li>Vier categorische variabelen (<em>sex, race, marital status, educational attainment</em>)</li>
+<li>Vier continue variabelen (<em>leeftijd, inkomen, sociale uitkeringen, eigendomsbelasting</em>)</li>
+<li>Vier categorische variabelen (<em>geslacht, etniciteit, huwelijkse staat, opleidingsniveau</em>)</li>
 </ul>
-<h3 id="synthesische-modellen">Synthesische modellen</h3>
+<h3 id="synthetische-data-modellen">Synthetische data modellen</h3>
 <p>(Multinomiale) logistische regressie voor categorische variabelen</p>
 <ol type="1">
 <li>Lineaire regressie</li>
-<li>Lineaire regressie met transformaties (derdemachtswortel)</li>
-<li>Lineaire regressie met transformaties en semi-continu modelleren</li>
+<li>Lineaire regressie met transformaties (kubieke wortel)</li>
+<li>Lineaire regressie met transformaties and semi-continu modelleren</li>
 </ol>
-<aside class="notes">
-<p>Vervolgens hebben we dezelfde density ratio procedure ook toegepast op een multivariaat voorbeeld, waarin we een data set met 8 variabelen hebben gesynthetiseerd. Hierbij hebben we de synthesis modellen stapsgewijs verbeterd, en hebben we gekeken of deze verbeteringen werden opgepikt door de density ratio schattingen. En dan in het bijzonder de Pearson divergence zoals hierboven beschreven. Laten we beginnen met de categorische variabelen, deze zijn altijd met logistische of multinomiale logistische regressie geschat. Dit werkte best wel goed, dus hier hebben we niets aan verbeterd. Voor de continue variabelen zijn we begonnen met een simpel lineair model, en deze hebben we stapsgewijs verbeterd, eerst door de variabelen te transformeren, en vervolgens door een puntmassa op de waarde 0 apart te simuleren, voordat de rest van de data gesynthetiseerd werd middels een lineair model.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>Dank aan Jörg Drechsler voor het beschikbaar stellen van de data.</p></li></ol></aside></section>
-<section id="synthetische-data-visueel" class="slide level2">
-<h2>Synthetische data (visueel)</h2>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>We zijn Jörg Drechsler dankbaar voor het delen van de data.</p></li></ol></aside></section>
+<section id="utility-of-the-synthetic-data" class="slide level2">
+<h2>Utility of the synthetic data</h2>
 
-<img data-src="files/syn-vars.png" class="r-stretch"></section>
-<section id="kwaliteit-van-synthetische-data" class="slide level2">
-<h2>Kwaliteit van synthetische data</h2>
-
-<img data-src="files/syn-PEs.png" class="r-stretch"></section>
-<section id="nadelen-van-density-ratios" class="slide level2">
-<h2>Nadelen van density ratios</h2>
-<p>Geschiktheid voor categorische data moet onderzocht worden</p>
-<ul>
-<li>In bovenstaand voorbeeld werd categorische data simpelweg getransformeerd naar numerieke data (vier categoriën –&gt; 1, 2, 3, 4)</li>
-</ul>
-<p>Privacy risico’s van density ratio waardes?</p>
-</section></section>
+<img data-src="files/syn-PEs.png" class="r-stretch"></section></section>
 <section>
-<section id="bijkomende-voordelen-van-density-ratios" class="title-slide slide level1 center">
-<h1>Bijkomende voordelen van density ratios</h1>
+<section id="terug-naar-de-kern" class="title-slide slide level1 center">
+<h1>Terug naar de kern</h1>
 
+</section>
+<section id="samenvatting" class="slide level2">
+<h2>Samenvatting</h2>
+<p><br></p>
+<p>Hoe specifieker hoe beter</p>
+<p><br></p>
+<p>Maar soms kan het niet specifiek, omdat je het doel niet kent</p>
+<p><br></p>
+<p>Dan blijft het belangrijk om met specifieke maten te evalueren</p>
+<p><br></p>
+<p>Maar kunnen algemene maten ook heel nuttig zijn</p>
+</section></section>
+<section id="negeer-niet-de-privacy-risicos-synthetische-data-kan-té-realistisch-zijn" class="title-slide slide level1 center">
+<h1>Negeer niet de privacy risico’s, synthetische data kan té realistisch zijn</h1>
+
+</section>
+
+<section>
+<section id="dank-voor-jullie-aandacht" class="title-slide slide level1 center">
+<h1>Dank voor jullie aandacht!</h1>
+<p>Vragen?</p>
+<p><br> <br></p>
+<p>Nog meer vragen?</p>
+<ul>
+<li><a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a></li>
+</ul>
 </section>
 <section id="kwaliteit-van-synthetische-data-punten" class="slide level2">
 <h2>Kwaliteit van synthetische data punten</h2>
@@ -731,7 +888,7 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <h1>Bestaande kwaliteitsmaten als density ratios</h1>
 
 </section>
-<section id="pmse" class="slide level2 smaller">
+<section id="pmse-1" class="slide level2 smaller">
 <h2><span class="math inline">pMSE</span></h2>
 <p><span class="math display">\begin{aligned}
 r(\boldsymbol{X}) &amp;= \frac{p(\boldsymbol{X}_{\text{syn}})}{p(\boldsymbol{X}_{\text{obs}})} \\
@@ -750,20 +907,10 @@ KL(\boldsymbol{X}_{\text{syn}}, X_{\text{obs}}) = \int \log\Bigg(\frac{p(\boldsy
 </span> can be approximated as <span class="math display">
 \sum^{n_{\text{syn}}}_{i=1} \log(r(\boldsymbol{X}_\text{syn}))/n_{\text{syn}}.
 </span></p>
-</section></section>
-<section id="dank-voor-jullie-aandacht" class="title-slide slide level1 center">
-<h1>Dank voor jullie aandacht!</h1>
-<p>Vragen?</p>
-<p><br> <br></p>
-<p>Nog meer vragen?</p>
-<ul>
-<li><a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a></li>
-</ul>
 <div class="footer footer-default">
 
 </div>
-</section>
-
+</section></section>
 
     </div>
   </div>

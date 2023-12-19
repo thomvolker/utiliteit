@@ -42,9 +42,10 @@ Thom Volker ([t.b.volker@uu.nl](mailto:t.b.volker@uu.nl))
 :::
 
 ::: {.column width="60%"}
-- PhD kandidaat bij Universiteit Utrecht en CBS
 
 - MSc. in Methoden en Statistiek & Sociologie
+
+- PhD kandidaat bij Universiteit Utrecht en CBS
 
   - Doel: Doorontwikkelen van veilige (!) data synthesis technieken
 
@@ -52,11 +53,6 @@ Thom Volker ([t.b.volker@uu.nl](mailto:t.b.volker@uu.nl))
 
 ::::
 
-::: {.notes}
-Intro van mezelf
-
-Vandaag ga ik jullie vertellen wat synthetische data is, geef ik een paar korte voorbeelden van hoe je het zou kunnen genereren, en vooral: hoe kan je dan de kwaliteit van deze synthetische data evalueren (waarbij ik me enkel focus op hoe realistisch deze data is, het privacy aspect, hoe veilig de synthetische data is, laat ik omwille van de tijd buiten beschouwing).
-:::
 
 ## Open materialen
 
@@ -82,25 +78,7 @@ _Neppe data, gegenereerde data, gesimuleerde data, digital twins_
 In tegenstelling tot echte, verzamelde data, die voortkomt uit de complexe systemen in deze wereld.
 :::
 
-## Synthetische data {visibility="hidden"}
 
-<br>
-
-::: {.callout-tip title="Definitie"}
-
-Synthetische data is gegenereerd door een model.
-
-In tegenstelling tot echte, verzamelde, data, die voortkomt uit complexe systemen.
-
-:::
-
-<br>
-
-::: aside
-
-Mocht je dit complexe systeem nou volledig doorgrond hebben, kan je direct nieuwe data genereren uit het _ware_ proces. Hier kan geen synthetische data tegenop. Helaas komt het ook nooit voor.
-
-:::
 
 ## Synthetische data generatie cyclus
 
@@ -174,19 +152,34 @@ ggplot(NULL, aes(x, y)) +
 
 # Wanneer is synthetische data bruikbaar?
 
+::: {.notes}
+
+Synthetische data is bruikbaar als het goed genoeg is voor het doel waartoe het dient. 
+Kan je verwachten dat je elke mogelijke analyse die je had kunnen doen op de echte data, ook kan doen op de synthetische data? Dat zou fantastisch zijn, maar waarschijnlijk is dat niet de realiteit, en dat hoeft ook niet per se. Desalniettemin zou het mooi zijn om wel zo dicht mogelijk bij dit ideaal te komen. Toch zou het mooi zijn als we zo dicht mogelijk bij dit ideaal kunnen komen, omdat de synthetische data dan het meest tot zijn recht komt, de echte data het minst gebruikt hoeft te worden, en dus het best beschermd wordt. Het evalueren van utiliteit kan helpen om de synthetische data zo goed mogelijk te maken. Uiteraard allemaal binnen de grenzen van een acceptabel privacy risico.
+
+:::
+
 ##
 
 ### Intuïtief
 
+- Kunnen we de synthetische data voor dezelfde doeleinden gebruiken als de geobserveerde data?
+
 - Hebben de synthetische en geobserveerde data een vergelijkbare verdeling?
 
-- Kunnen we de synthetische data voor dezelfde doeleinden gebruiken als de geobserveerde data?
 
 ### Praktisch
 
+- Geven analyses van de synthetische en geobserveerde data vergelijkbare resultaten?
+
 - Kunnen we de synthetische data onderscheiden van de echte data?
 
-- Geven analyses van de synthetische en geobserveerde data vergelijkbare resultaten?
+
+::: {.notes}
+
+Er zijn verschillende manieren om dit te beoordelen, en ik wil jullie nu even stap-voor-stap meenemen door een aantal klassen van utiliteitsmetrieken. 
+
+:::
 
 
 ## Kwaliteitsmaten voor synthetische data
@@ -231,7 +224,7 @@ Hetzelfde geldt voor plausibiliteit. Wanneer de data negatieve leeftijden bevat,
 :::
 
 
-## Voorbeeld I 
+## Voorbeeld
 
 <br>
 
@@ -265,9 +258,17 @@ data.frame(X = c(obs, syn),
 
 # Is dit een probleem?
 
+::: {.notes}
+
+Misschien. Het hangt af van het doel van de synthetische data, maar in sommige gevallen maakt de precieze verdeling van de echte data helemaal niet zoveel uit. Dat wil zeggen, voor een hoop analyses is het niet zo belangrijk dat de verdeling van de synthetische data klopt.
+
+:::
+
 ## Analyse-specifieke utiliteitsmaten
 
 Als je weet welke analyse uitgevoerd gaat worden, kun je synthetische data evalueren voor dit doel
+
+<br>
 
 ```{r}
 CIs <- data.frame(Mean = c(mean(obs), mean(syn))) |>
@@ -276,7 +277,7 @@ CIs <- data.frame(Mean = c(mean(obs), mean(syn))) |>
 rownames(CIs) <- c("Observed", "Synthetic")
 colnames(CIs) <- c("Gemiddelde", "2.5%", "97.5%")
 
-CIs
+CIs |> round(3)
 ```
 
 ```{r}
@@ -318,6 +319,12 @@ c(b0, b)
 
 # Maar hoe weten we welke analyses met de synthetische data uitgevoerd worden?
 
+::: {.notes}
+
+Soms staat van tevoren al heel duidelijk vast welke analyses uitgevoerd gaan worden met de synthetische data, bijvoorbeeld wanneer, in het kader van open science, synthetische data wordt gedeeld bij een paper om de analyses te kunnen repliceren. Of wannneer jullie, bij DUO bijvoorbeeld, al een heel gedetailleerd onderzoeksplan krijgen van een onderzoeker die met jullie synthetische data. Maar in heel veel gevallen is het niet zo duidelijk welke analyses er precies met de synthetische data uitgevoerd gaan worden, of willen mensen toch nog aanvullende analyses met de synthetische data doen. In zulke gevallen is het belangrijk dat de synthetische data in zijn geheel lijkt op de echte data. En om dit te evalueren hebben we algemene, of globale utiliteitsmaten.
+
+:::
+
 
 ## Globale utiliteitsmaten
 
@@ -339,7 +346,7 @@ data.frame(X = c(obs, syn),
 
 2. Voorspel voor elke observatie de kans $\pi_i$ dat deze synthetisch is
 
-3. Calculate $pMSE$ as $\sum^N_{i=1} (\pi_i - c)^2/N$, met $c = n_{\text{syn}} / (n_{\text{syn}} + n_{\text{obs}})$
+3. Bereken $pMSE$ als $\sum^N_{i=1} (\pi_i - c)^2/N$, met $c = n_{\text{syn}} / (n_{\text{syn}} + n_{\text{obs}})$
 
 4. Vergelijk $pMSE$ met verwachte waarde onder een correct generatief model
 

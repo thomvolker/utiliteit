@@ -444,28 +444,14 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <p><img data-src="files/me_square.jpg"></p>
 </div><div class="column" style="width:60%;">
 <ul>
-<li><p>PhD kandidaat bij Universiteit Utrecht en CBS</p></li>
-<li><p>MSc. in Methoden en Statistiek &amp; Sociologie</p>
+<li><p>MSc. in Methoden en Statistiek &amp; Sociologie</p></li>
+<li><p>PhD kandidaat bij Universiteit Utrecht en CBS</p>
 <ul>
 <li>Doel: Doorontwikkelen van veilige (!) data synthesis technieken</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<aside class="notes">
-<p>Intro van mezelf</p>
-<p>Vandaag ga ik jullie vertellen wat synthetische data is, geef ik een paar korte voorbeelden van hoe je het zou kunnen genereren, en vooral: hoe kan je dan de kwaliteit van deze synthetische data evalueren (waarbij ik me enkel focus op hoe realistisch deze data is, het privacy aspect, hoe veilig de synthetische data is, laat ik omwille van de tijd buiten beschouwing).</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="open-materialen" class="slide level2">
 <h2>Open materialen</h2>
@@ -495,7 +481,6 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
           display:block!important;
       }</style></aside>
 </section>
-
 <section id="synthetische-data-generatie-cyclus" class="slide level2">
 <h2>Synthetische data generatie cyclus</h2>
 <ol type="1">
@@ -534,20 +519,45 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <section>
 <section id="wanneer-is-synthetische-data-bruikbaar" class="title-slide slide level1 center">
 <h1>Wanneer is synthetische data bruikbaar?</h1>
-
+<aside class="notes">
+<p>Synthetische data is bruikbaar als het goed genoeg is voor het doel waartoe het dient. Kan je verwachten dat je elke mogelijke analyse die je had kunnen doen op de echte data, ook kan doen op de synthetische data? Dat zou fantastisch zijn, maar waarschijnlijk is dat niet de realiteit, en dat hoeft ook niet per se. Desalniettemin zou het mooi zijn om wel zo dicht mogelijk bij dit ideaal te komen. Toch zou het mooi zijn als we zo dicht mogelijk bij dit ideaal kunnen komen, omdat de synthetische data dan het meest tot zijn recht komt, de echte data het minst gebruikt hoeft te worden, en dus het best beschermd wordt. Het evalueren van utiliteit kan helpen om de synthetische data zo goed mogelijk te maken. Uiteraard allemaal binnen de grenzen van een acceptabel privacy risico.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
 <h3 id="intuïtief">Intuïtief</h3>
 <ul>
-<li><p>Hebben de synthetische en geobserveerde data een vergelijkbare verdeling?</p></li>
 <li><p>Kunnen we de synthetische data voor dezelfde doeleinden gebruiken als de geobserveerde data?</p></li>
+<li><p>Hebben de synthetische en geobserveerde data een vergelijkbare verdeling?</p></li>
 </ul>
 <h3 id="praktisch">Praktisch</h3>
 <ul>
-<li><p>Kunnen we de synthetische data onderscheiden van de echte data?</p></li>
 <li><p>Geven analyses van de synthetische en geobserveerde data vergelijkbare resultaten?</p></li>
+<li><p>Kunnen we de synthetische data onderscheiden van de echte data?</p></li>
 </ul>
+<aside class="notes">
+<p>Er zijn verschillende manieren om dit te beoordelen, en ik wil jullie nu even stap-voor-stap meenemen door een aantal klassen van utiliteitsmetrieken.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="kwaliteitsmaten-voor-synthetische-data" class="slide level2">
 <h2>Kwaliteitsmaten voor synthetische data</h2>
@@ -593,8 +603,8 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
           display:block!important;
       }</style></aside>
 </section>
-<section id="voorbeeld-i" class="slide level2">
-<h2>Voorbeeld I</h2>
+<section id="voorbeeld" class="slide level2">
+<h2>Voorbeeld</h2>
 <p><br></p>
 <p>Is dit “plausibele” synthetische data?</p>
 <p><br></p>
@@ -643,11 +653,24 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <section>
 <section id="is-dit-een-probleem" class="title-slide slide level1 center">
 <h1>Is dit een probleem?</h1>
-
+<aside class="notes">
+<p>Misschien. Het hangt af van het doel van de synthetische data, maar in sommige gevallen maakt de precieze verdeling van de echte data helemaal niet zoveel uit. Dat wil zeggen, voor een hoop analyses is het niet zo belangrijk dat de verdeling van de synthetische data klopt.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="analyse-specifieke-utiliteitsmaten" class="slide level2">
 <h2>Analyse-specifieke utiliteitsmaten</h2>
 <p>Als je weet welke analyse uitgevoerd gaat worden, kun je synthetische data evalueren voor dit doel</p>
+<p><br></p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="kable-table">
@@ -663,15 +686,15 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Observed</td>
-<td style="text-align: right;">3.07600</td>
-<td style="text-align: right;">2.952795</td>
-<td style="text-align: right;">3.199205</td>
+<td style="text-align: right;">3.076</td>
+<td style="text-align: right;">2.953</td>
+<td style="text-align: right;">3.199</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Synthetic</td>
-<td style="text-align: right;">3.08803</td>
-<td style="text-align: right;">2.961028</td>
-<td style="text-align: right;">3.215032</td>
+<td style="text-align: right;">3.088</td>
+<td style="text-align: right;">2.961</td>
+<td style="text-align: right;">3.215</td>
 </tr>
 </tbody>
 </table>
@@ -719,7 +742,19 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <section>
 <section id="maar-hoe-weten-we-welke-analyses-met-de-synthetische-data-uitgevoerd-worden" class="title-slide slide level1 center">
 <h1>Maar hoe weten we welke analyses met de synthetische data uitgevoerd worden?</h1>
-
+<aside class="notes">
+<p>Soms staat van tevoren al heel duidelijk vast welke analyses uitgevoerd gaan worden met de synthetische data, bijvoorbeeld wanneer, in het kader van open science, synthetische data wordt gedeeld bij een paper om de analyses te kunnen repliceren. Of wannneer jullie, bij DUO bijvoorbeeld, al een heel gedetailleerd onderzoeksplan krijgen van een onderzoeker die met jullie synthetische data. Maar in heel veel gevallen is het niet zo duidelijk welke analyses er precies met de synthetische data uitgevoerd gaan worden, of willen mensen toch nog aanvullende analyses met de synthetische data doen. In zulke gevallen is het belangrijk dat de synthetische data in zijn geheel lijkt op de echte data. En om dit te evalueren hebben we algemene, of globale utiliteitsmaten.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="globale-utiliteitsmaten" class="slide level2">
 <h2>Globale utiliteitsmaten</h2>
@@ -731,7 +766,7 @@ Thom Benjamin Volker <br> <a href="mailto:t.b.volker@uu.nl">t.b.volker@uu.nl</a>
 <ol type="1">
 <li><p>Plak synthetische en geobserveerde data onder elkaar</p></li>
 <li><p>Voorspel voor elke observatie de kans <span class="math inline">\pi_i</span> dat deze synthetisch is</p></li>
-<li><p>Calculate <span class="math inline">pMSE</span> as <span class="math inline">\sum^N_{i=1} (\pi_i - c)^2/N</span>, met <span class="math inline">c = n_{\text{syn}} / (n_{\text{syn}} + n_{\text{obs}})</span></p></li>
+<li><p>Bereken <span class="math inline">pMSE</span> als <span class="math inline">\sum^N_{i=1} (\pi_i - c)^2/N</span>, met <span class="math inline">c = n_{\text{syn}} / (n_{\text{syn}} + n_{\text{obs}})</span></p></li>
 <li><p>Vergelijk <span class="math inline">pMSE</span> met verwachte waarde onder een correct generatief model</p></li>
 </ol>
 </section></section>
